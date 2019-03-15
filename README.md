@@ -28,4 +28,17 @@ Holder($$selector,param = {
               stepWidthPlus (매개 시간간격에 누적되는 수치, 누르고 있을시 이 수치로 매개시간겨으로 지금상태치가 늘어납니다)
               stepWidthMinus (매가 시간간격에 줄어드는 수치,  눌렀다고 포기했을시 이 수치로 매개시간격으로 줄어듭니다)
               showState:콜백함수; cur은 지금상태치이고 param은 Holder함수의 두번째파라미터의 지금 상태값입니다.
+              
+  예:
+        let button = document.createElement("button");
+        document.body.appendChild(button);
+        button.setAttribute('value','holdme');
+        div.classList.add('buttonX');
+        Holder(".buttonX", {
+                      min:0, max;100, interval:30,
+                      stepWidthPlus:1, stepWidthMinus:2,
+                      showState:(cur, param)=>{
+                                   console.log(cur);
+                      }
+         });             
 </pre>
