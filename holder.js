@@ -1,7 +1,7 @@
 export function Holder($$selector,param = {
-        min:0, max:{n:20}, interval:30, 
+        min:0, max:20, interval:30, 
         stepWidthPlus:1, stepWidthMinus:1,
-        showState:(cur)=>{ throw "the callback must be implemented!" ;}
+        showState:(cur,param)=>{ throw "the callback must be implemented!" ;}
     }){   
 
     let tids = [];
@@ -42,16 +42,16 @@ export function Holder($$selector,param = {
     mouseHold($$selector,
         (stopit)=>{//stopit is array
             clearTids(tids);
-            param.showState(i);
+            param.showState(i, param);
             tids.push(setInterval(()=>{
-                if(i>=param.max.n) {
+                if(i>=param.max) {
                     clearTids(tids);
-                    i = param.max.n;
+                    i = param.max;
                     stopit[0] = true;//达到目标值暂停一切间隔器
                 }else{
                     i += stepWidthPlus;
                 }
-                param.showState(i);
+                param.showState(i,param);
             }, interval));
         }, (stopit)=>{
             clearTids(tids);
@@ -63,7 +63,7 @@ export function Holder($$selector,param = {
                 }else{
                     i -= stepWidthMinus;
                 }
-                param.showState(i);
+                param.showState(i,param);
             }, interval));
         }
     );
@@ -74,7 +74,7 @@ export function Holder($$selector,param = {
     Holder(".holdx",{
         min:0,max:100,interval:10,
         stepWidthPlus:1, stepWidthMinus:1,
-        showState: (cur)=>{
+        showState: (cur, param)=>{
             console.log(cur);
             
         }
