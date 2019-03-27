@@ -48,7 +48,12 @@ export function Holder($$selector,param = {
                     clearTids(tids);
                     i = param.max;
                     stopit[0] = true;//达到目标值暂停一切间隔器
+                    param.terminated = true;
+                    param.running = false;
                 }else{
+                    param.initialized = false;
+                    param.terminated = false;
+                    param.running = true;
                     i += stepWidthPlus;
                 }
                 param.showState(i,param);
@@ -56,11 +61,17 @@ export function Holder($$selector,param = {
         }, (stopit)=>{
             clearTids(tids);
             tids.push(setInterval(()=>{
+                
                 if(i<=param.min){
                     clearTids(tids);
                     i = param.min;
+                    param.initialized = true;
+                    param.running = false;
                     //stopit[0] = true;
                 }else{
+                    param.initialized = false;
+                    param.terminated = false;
+                    param.running = true;
                     i -= stepWidthMinus;
                 }
                 param.showState(i,param);
